@@ -1,0 +1,54 @@
+{
+  "name": "mzansi-spares-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Monorepo for mzansi-spares-platform multi-tenant SaaS marketplace admin system.",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspaces --if-present",
+    "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:workspaces",
+    "typecheck": "npm run typecheck:ts && npm run typecheck:workspaces",
+    "test": "npm run test:unit && npm run test:workspaces",
+    "stack:up": "docker compose -f infra/docker/docker-compose.yml --env-file .env.docker up -d --build",
+    "stack:down": "docker compose -f infra/docker/docker-compose.yml --env-file .env.docker down",
+    "stack:logs": "docker compose -f infra/docker/docker-compose.yml --env-file .env.docker logs -f --tail=200",
+    "prepare": "husky",
+    "lint:eslint": "eslint . --ext .js,.ts",
+    "lint:prettier": "prettier --check .",
+    "lint:workspaces": "npm run lint --workspaces --if-present",
+    "typecheck:ts": "tsc --noEmit -p tsconfig.json",
+    "typecheck:workspaces": "npm run typecheck --workspaces --if-present",
+    "test:unit": "node --test apps/web/test/*.test.js apps/api-gateway/test/*.test.js apps/identity-service/test/*.test.js apps/tenant-service/test/*.test.js apps/vendor-service/test/*.test.js apps/catalog-service/test/*.test.js apps/inventory-service/test/*.test.js apps/search-sync-service/test/*.test.js apps/notification-service/test/*.test.js apps/billing-service/test/*.test.js packages/authz/test/*.test.js",
+    "test:workspaces": "npm run test --workspaces --if-present",
+    "db:migrate": "npm run db:migrate -w @packages/db-utils",
+    "db:migrate:down": "npm run db:migrate:down -w @packages/db-utils",
+    "db:seed": "npm run db:seed -w @packages/db-utils"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@typescript-eslint/eslint-plugin": "^8.20.0",
+    "@typescript-eslint/parser": "^8.20.0",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^10.0.1",
+    "globals": "^15.14.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  }
+}

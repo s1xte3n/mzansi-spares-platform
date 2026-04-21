@@ -1,0 +1,14 @@
+node_modules
+.env
+.env.*
+dist
+build
+coverage
+.vscode
+.DS_Store
+*.log
+.pytest_cache
+__pycache__
+.venv
+
+!.env.docker.example

@@ -1,0 +1,24 @@
+{
+  "name": "@apps/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "spa:dev": "vite",
+    "spa:build": "vite build",
+    "lint": "echo \"[web] lint not configured yet\"",
+    "typecheck": "echo \"[web] typecheck not configured yet\"",
+    "test": "echo \"[web] test not configured yet\""
+  },
+  "dependencies": {
+    "@clerk/clerk-react": "^5.26.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.1"
+  },
+  "devDependencies": {
+    "vite": "^5.4.12"
+  }
+}

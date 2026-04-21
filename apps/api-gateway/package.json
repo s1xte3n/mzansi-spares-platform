@@ -1,0 +1,17 @@
+{
+  "name": "@apps/api-gateway",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "lint": "echo \"[api-gateway] lint not configured yet\"",
+    "typecheck": "echo \"[api-gateway] typecheck not configured yet\"",
+    "test": "echo \"[api-gateway] test not configured yet\""
+  },
+  "dependencies": {
+    "@clerk/express": "^1.5.7",
+    "express": "^4.21.2"
+  }
+}
