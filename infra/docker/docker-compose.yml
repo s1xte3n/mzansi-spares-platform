@@ -1,0 +1,201 @@
+version: "3.9"
+
+x-node-service: &node-service
+  build:
+    context: ../..
+    dockerfile: infra/docker/node-app.Dockerfile
+  env_file:
+    - ../../.env.docker
+  environment:
+    NODE_ENV: ${NODE_ENV:-development}
+  restart: unless-stopped
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    env_file:
+      - ../../.env.docker
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-mzansi_spares}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.12
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-local-meili-master-key}
+    ports:
+      - "${MEILI_PORT:-7700}:7700"
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - "${MAILHOG_SMTP_PORT:-1025}:1025"
+      - "${MAILHOG_UI_PORT:-8025}:8025"
+
+  web:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/web
+    environment:
+      PORT: 5173
+      SERVICE_NAME: web
+    ports:
+      - "${WEB_PORT:-5173}:5173"
+    depends_on:
+      - api-gateway
+
+  api-gateway:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/api-gateway
+    environment:
+      PORT: 3000
+      SERVICE_NAME: api-gateway
+    ports:
+      - "${API_GATEWAY_PORT:-4000}:3000"
+    depends_on:
+      - postgres
+      - redis
+
+  identity-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/identity-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: identity-service
+    ports:
+      - "${IDENTITY_SERVICE_PORT:-4001}:3000"
+
+  tenant-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/tenant-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: tenant-service
+    ports:
+      - "${TENANT_SERVICE_PORT:-4002}:3000"
+
+  vendor-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/vendor-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: vendor-service
+    ports:
+      - "${VENDOR_SERVICE_PORT:-4003}:3000"
+
+  catalog-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/catalog-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: catalog-service
+    ports:
+      - "${CATALOG_SERVICE_PORT:-4004}:3000"
+
+  inventory-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/inventory-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: inventory-service
+    ports:
+      - "${INVENTORY_SERVICE_PORT:-4005}:3000"
+
+  order-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/order-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: order-service
+    ports:
+      - "${ORDER_SERVICE_PORT:-4006}:3000"
+
+  billing-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/billing-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: billing-service
+    ports:
+      - "${BILLING_SERVICE_PORT:-4007}:3000"
+
+  notification-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/notification-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: notification-service
+    ports:
+      - "${NOTIFICATION_SERVICE_PORT:-4008}:3000"
+
+  search-sync-service:
+    <<: *node-service
+    build:
+      context: ../..
+      dockerfile: infra/docker/node-app.Dockerfile
+      args:
+        APP_DIR: apps/search-sync-service
+    environment:
+      PORT: 3000
+      SERVICE_NAME: search-sync-service
+    ports:
+      - "${SEARCH_SYNC_SERVICE_PORT:-4009}:3000"
+
+  fastapi-service:
+    build:
+      context: ../..
+      dockerfile: apps/fastapi-service/Dockerfile
+    ports:
+      - "${FASTAPI_SERVICE_PORT:-4010}:8000"
+
+volumes:
+  pgdata:

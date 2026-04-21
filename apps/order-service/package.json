@@ -1,0 +1,16 @@
+{
+  "name": "@apps/order-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "lint": "echo \"[order-service] lint not configured yet\"",
+    "typecheck": "echo \"[order-service] typecheck not configured yet\"",
+    "test": "echo \"[order-service] test not configured yet\""
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

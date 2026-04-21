@@ -1,0 +1,16 @@
+{
+  "name": "@apps/notification-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "lint": "echo \"[notification-service] lint not configured yet\"",
+    "typecheck": "echo \"[notification-service] typecheck not configured yet\"",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

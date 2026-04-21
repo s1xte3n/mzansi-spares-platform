@@ -1,0 +1,17 @@
+{
+  "name": "@apps/identity-service",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "lint": "echo \"[identity-service] lint not configured yet\"",
+    "typecheck": "echo \"[identity-service] typecheck not configured yet\"",
+    "test": "echo \"[identity-service] test not configured yet\""
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
+}
