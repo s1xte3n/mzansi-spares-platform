@@ -11,6 +11,7 @@
     "test": "echo \"[tenant-service] test not configured yet\""
   },
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
   }
 }

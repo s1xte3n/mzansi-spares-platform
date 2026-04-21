@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/express": "^1.5.7",
+    "@packages/authz": "0.1.0",
     "express": "^4.21.2"
   }
 }
