@@ -1,0 +1,23 @@
+{
+  "name": "@packages/db-utils",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "dev": "echo \"[db-utils] dev scaffold not required\"",
+    "lint": "echo \"[db-utils] lint scaffold not yet implemented\"",
+    "typecheck": "echo \"[db-utils] typecheck scaffold not yet implemented\"",
+    "test": "echo \"[db-utils] test scaffold not yet implemented\"",
+    "db:migrate": "node-pg-migrate up --migrations-dir migrations --database-url $DATABASE_URL",
+    "db:migrate:down": "node-pg-migrate down --migrations-dir migrations --database-url $DATABASE_URL",
+    "db:seed": "node ./scripts/seed.mjs"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "node-pg-migrate": "^7.9.1"
+  }
+}

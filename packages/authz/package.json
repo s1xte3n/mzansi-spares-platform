@@ -1,0 +1,14 @@
+{
+  "name": "@packages/authz",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.js",
+  "types": "src/index.ts",
+  "scripts": {
+    "dev": "echo \"[authz] dev scaffold not required\"",
+    "lint": "echo \"[authz] lint scaffold not yet implemented\"",
+    "typecheck": "echo \"[authz] typecheck scaffold not yet implemented\"",
+    "test": "echo \"[authz] test scaffold not yet implemented\""
+  }
+}
