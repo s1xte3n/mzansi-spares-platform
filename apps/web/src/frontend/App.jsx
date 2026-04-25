@@ -21,13 +21,47 @@ const timeline = [
   ["bright", "Price Changed", "By: Admin (Pieter Venter)", "Ref: TIM-BELT-VW", "Manual override for loyalty credit"]
 ];
 
-function PlaceholderPage({ title }) {
+const sectionContent = {
+  dashboard: {
+    title: "Dashboard",
+    description: "Live operational view across support, stock movement, and marketplace risk posture.",
+    stats: [["Open Alerts", "14"], ["Orders Today", "328"], ["SLA Breaches", "2"]]
+  },
+  shops: {
+    title: "Spares Shops",
+    description: "Monitor onboarding quality, catalog readiness, and risk indicators per merchant.",
+    stats: [["Active Shops", "186"], ["Pending KYC", "11"], ["Flagged Shops", "5"]]
+  },
+  cases: {
+    title: "Active Cases",
+    description: "Track current disputes and escalations that require intervention.",
+    stats: [["Open Cases", "64"], ["Escalated", "9"], ["Awaiting Vendor", "17"]]
+  },
+  inventory: {
+    title: "Global Inventory",
+    description: "Cross-tenant inventory visibility for constrained parts and abnormal stock swings.",
+    stats: [["Low Stock SKUs", "43"], ["Backorders", "18"], ["At Risk Today", "7"]]
+  }
+};
+
+function SectionPage({ pageKey }) {
+  const content = sectionContent[pageKey];
+
   return (
     <section className="rounded-xl border border-[#05183c] bg-[#06122d] p-8">
-      <h2 className="font-[Manrope] text-2xl font-bold tracking-tight">{title}</h2>
-      <p className="mt-2 text-sm text-[#91aaeb]">
-        This section is scaffolded and now route-accessible from the left navigation.
-      </p>
+      <h2 className="font-[Manrope] text-2xl font-bold tracking-tight">{content.title}</h2>
+      <p className="mt-2 text-sm text-[#91aaeb]">{content.description}</p>
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {content.stats.map(([label, value]) => (
+          <div key={label} className="rounded-lg bg-[#05183c] p-4">
+            <div className="text-xs uppercase tracking-wider text-[#91aaeb]">{label}</div>
+            <div className="mt-2 font-[Manrope] text-2xl font-bold">{value}</div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-6 rounded-lg bg-[#05183c] p-4 text-sm text-[#91aaeb]">
+        This content is now route-wired and can be expanded with the full page-specific modules.
+      </div>
     </section>
   );
 }
@@ -104,11 +138,11 @@ export function App() {
 
         <Routes>
           <Route path="/" element={<Navigate to="/audit-compliance" replace />} />
-          <Route path="/dashboard" element={<main className="p-8"><PlaceholderPage title="Dashboard" /></main>} />
+          <Route path="/dashboard" element={<main className="p-8"><SectionPage pageKey="dashboard" /></main>} />
           <Route path="/audit-compliance" element={<AuditCompliancePage />} />
-          <Route path="/spares-shops" element={<main className="p-8"><PlaceholderPage title="Spares Shops" /></main>} />
-          <Route path="/active-cases" element={<main className="p-8"><PlaceholderPage title="Active Cases" /></main>} />
-          <Route path="/global-inventory" element={<main className="p-8"><PlaceholderPage title="Global Inventory" /></main>} />
+          <Route path="/spares-shops" element={<main className="p-8"><SectionPage pageKey="shops" /></main>} />
+          <Route path="/active-cases" element={<main className="p-8"><SectionPage pageKey="cases" /></main>} />
+          <Route path="/global-inventory" element={<main className="p-8"><SectionPage pageKey="inventory" /></main>} />
           <Route path="*" element={<Navigate to="/audit-compliance" replace />} />
         </Routes>
       </div>
