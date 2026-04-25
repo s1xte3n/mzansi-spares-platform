@@ -12,3 +12,6 @@ __pycache__
 .venv
 
 !.env.docker.example
+
+# Local Netlify folder
+.netlify

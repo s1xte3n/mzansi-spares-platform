@@ -1,0 +1,3 @@
+# ./wrangler.toml
+name = 'mzansi-spares-platform-web'
+pages_build_output_dir = 'apps/web/dist'

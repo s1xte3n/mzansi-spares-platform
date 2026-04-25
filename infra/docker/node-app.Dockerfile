@@ -1,14 +1,17 @@
 FROM node:20-alpine
 
 ARG APP_DIR
+
 ENV NODE_ENV=development
+WORKDIR /repo
 
-WORKDIR /app
+COPY package.json package-lock.json ./
+COPY apps ./apps
+COPY packages ./packages
 
-COPY ${APP_DIR}/package.json ./package.json
-RUN npm install --omit=dev
+RUN npm ci --omit=dev --ignore-scripts --no-audit --no-fund
 
-COPY ${APP_DIR}/src ./src
+WORKDIR /repo/${APP_DIR}
 
 EXPOSE 3000
 CMD ["npm", "start"]
